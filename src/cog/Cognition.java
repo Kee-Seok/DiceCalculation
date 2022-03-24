@@ -175,7 +175,9 @@ public class Cognition extends JFrame{
 			}
 		}
 	}
-
+	private void good() {
+		System.out.println("메소드가 실행됐어요. ㅋㅋ");
+	}
 	
 	public String getBackNumberOfDice(Image dice) { //This method return String value on the back of dice number.
 			String i = "";
