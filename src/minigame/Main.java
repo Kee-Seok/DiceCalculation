@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
 
+@SuppressWarnings("serial")
 public class Main extends JFrame{
 
 	public static final int SCREEN_WIDTH = 1280;
@@ -21,7 +22,7 @@ public class Main extends JFrame{
 		setKey();
 		setVisible(true);
 		gameStart();
-		baseball.tf[0].requestFocus();
+		BaseballGame.tf[0].requestFocus();
 	}
 	
 	public void gameStart() {
@@ -29,17 +30,26 @@ public class Main extends JFrame{
 		for(int i = 0; i < Model.a.length; i++) {
 		System.out.println(Model.a[i]);
 		}
-		BaseballGame.tf[3].addKeyListener(new KeyAdapter() {
+		for(int i = 0; i < BaseballGame.tf.length; i++) {
+		BaseballGame.tf[i].addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
 				switch(e.getKeyCode()) {
 				case KeyEvent.VK_ENTER :
 					Model.comparison(BaseballGame.tf);
+					if(Model.isEmptyNum!=true) { //텍스트필드에 숫자가 모두 입력돼있으면  처리 후 텍스트필드 지우고 포커스 첫번째 텍스트필드로 이동
 					Model.clearTf();
-					baseball.tf[0].requestFocus();
+					BaseballGame.tf[0].requestFocus();
+					}else {//텍스트필드가 하나라도 비었을때 아무것도 연산하지 않음. JOptionPane만 띄움
+						Model.isEmptyNum = false;
+					}
+					break;
+				case KeyEvent.VK_ESCAPE :
+					System.exit(0);
 					break;
 				}
 			}
 		});
+		}
 	}
 	
 	public void setKey() {
@@ -53,15 +63,6 @@ public class Main extends JFrame{
 			}
 		});
 		baseball.addKeyListener(new KeyAdapter() {
-			public void keyPressed(KeyEvent e) {
-				switch(e.getKeyCode()) {
-				case KeyEvent.VK_ESCAPE :
-					System.exit(0);
-					break;
-				}
-			}
-		});
-		BaseballGame.tf[0].addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
 				switch(e.getKeyCode()) {
 				case KeyEvent.VK_ESCAPE :

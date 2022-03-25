@@ -12,6 +12,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 
+@SuppressWarnings("serial")
 public class BaseballGame extends JPanel{
 
 	private static int objSize = 200; //공, 숫자, 텍스트필드 가로 세로 크기

@@ -13,6 +13,7 @@ public class Model {
 	public static int strike, ball, out;
 	public static String result;
 	public static boolean isExistSameNum = false;
+	public static boolean isEmptyNum = false;
 	public static JOptionPane op = new JOptionPane();
 	//ArrayList에 숫자 1~9까지 넣어준다.
 	public static void setNum() {
@@ -45,13 +46,18 @@ public class Model {
 	//텍스트필드에 입력된 값과 초기 세팅된 번호와 비교 후 결과 출력
 	public static void comparison(JTextField[] tf) {
 //		substituteNum();
+		String b = tf[0].getText()+tf[1].getText()+tf[2].getText()+tf[3].getText();
+		if(b.length()<4) { //텍스트필드에 숫자가 비었을때 체크
+			isEmptyNum = true;
+			JOptionPane.showMessageDialog(Main.baseball, "숫자를 모두 입력하세요.");
+			return;
+		}
 	for(int i = 0; i < 3; i++) {
 		for(int j = i+1; j <= 3; j++) {
-			if(tf[i].getText().equals(tf[j].getText())||tf[i].getText()==null||tf[i].getText()==""){
+			if(tf[i].getText().equals(tf[j].getText())){
 				isExistSameNum = true;
 				System.out.println(isExistSameNum);
-				
-				op.showMessageDialog(Main.baseball, "숫자가 중복됨");
+				JOptionPane.showMessageDialog(Main.baseball, "중복된 숫자가 있습니다.");
 				return;
 			}
 		}
@@ -67,20 +73,20 @@ public class Model {
 		}
       out = 4 - strike - ball;
    	  result = strike + "Strike "+ball+"Ball "+out+"Out";
-   	  Main.baseball.gameCount++;
+   	  BaseballGame.gameCount++;
    	  if(strike == 4) { //정답이면 출력될 요소들.
    		  for(int i = 0; i < BaseballGame.str.length; i++) {
    			  BaseballGame.str[i] = BaseballGame.tf[i].getText();
    		  }
    		  Main.baseball.repaint();
    		  BaseballGame.ta.append("정답입니다!");
-   		  op.showMessageDialog(Main.baseball, Main.baseball.gameCount+"회차 정답입니다!");
+   		  JOptionPane.showMessageDialog(Main.baseball, BaseballGame.gameCount+"회차 정답입니다!");
    		  BaseballGame.ta.setText("");
    		  for(int i = 0; i < BaseballGame.str.length; i++) {
    			  BaseballGame.str[i] = "?";
    			  BaseballGame.tf[i].setText("");
    		  }
-   		Main.baseball.gameCount = 0;
+   		BaseballGame.gameCount = 0;
    		Main.baseball.repaint();
      	  strike = 0;
        	  ball = 0;
@@ -91,9 +97,9 @@ public class Model {
   			}
    		return;
    	  }
-   	  op.showMessageDialog(Main.baseball, result+" "+tf[0].getText()+
+   	  JOptionPane.showMessageDialog(Main.baseball, result+" "+tf[0].getText()+
    			tf[1].getText()+tf[2].getText()+tf[3].getText());
-   	  BaseballGame.ta.append(" "+Main.baseball.gameCount+"회차 : "+result+" ("+tf[0].getText()+
+   	  BaseballGame.ta.append(" "+BaseballGame.gameCount+"회차 : "+result+" ("+tf[0].getText()+
      			tf[1].getText()+tf[2].getText()+tf[3].getText()+")\n");
    	  strike = 0;
    	  ball = 0;
