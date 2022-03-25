@@ -1,9 +1,12 @@
 package minigame;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
+import javax.swing.Timer;
 
 @SuppressWarnings("serial")
 public class Main extends JFrame{
@@ -23,6 +26,20 @@ public class Main extends JFrame{
 		setVisible(true);
 		gameStart();
 		BaseballGame.tf[0].requestFocus();
+		Timer tfCheckTimer = new Timer(100, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			if(BaseballGame.tf[0].isFocusOwner()) {
+				if(BaseballGame.tf[0].getText().length()>0) {BaseballGame.tf[1].requestFocus();}else{return;}
+			}
+			if(BaseballGame.tf[1].isFocusOwner()) {
+				if(BaseballGame.tf[1].getText().length()>0) {BaseballGame.tf[2].requestFocus();}else{return;}
+			}
+			if(BaseballGame.tf[2].isFocusOwner()) {
+				if(BaseballGame.tf[2].getText().length()>0) {BaseballGame.tf[3].requestFocus();}else{return;}
+			}
+		}
+	});
+		tfCheckTimer.start();
 	}
 	
 	public void gameStart() {
